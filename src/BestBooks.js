@@ -4,6 +4,7 @@ import Jumbotron from 'react-bootstrap/Jumbotron';
 import './BestBooks.css';
 
 class MyFavoriteBooks extends React.Component {
+
   render() {
     return(
       <Jumbotron>
