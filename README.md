@@ -1,11 +1,22 @@
-# Start your own "Can of Books" App
+#Best Books
 
-This repository has starter code to begin work on creating your own online bookshelf.
+**Author**: Jana Abdelkader & Tariq Abu-Laban
+**Version**: 1.0.0
 
-## What can books do?
+## Overview
+A webpage that will allow the user to login using their google account, an has a personal profile that has their favorite books.
 
-Books are life-changing. They have the power to enlighten, educate, entertain, heal, and help us grow. Build out this code base to create an web app to track what books have impacted you, and what's recommended to read next.
 
-## Use this template
+## Getting Started
+sign-in using google.
 
-Clone this repo to your own account with the green "Use this template" button. Then, add any collaborators. Now you are ready to start adding features! Deploy your site to let the world know which books have had the greatest impact on you, and what's recommended. Enjoy!
+## Architecture
+React.js
+Bootstrap
+Auth0
+
+## Change Log
+
+11/7/2021 4:00 PM - The login using Auth0 is now activated. 
+
+## Credit and Collaborations
