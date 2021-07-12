@@ -14,15 +14,16 @@ import BestBooks from './BestBooks';
 import Login from './Login';
 import Profile from './Profile';
 
+
 class App extends React.Component {
 
   render() {
-    console.log('app', this.props);
+    // console.log('app', this.props);
     return(
       <>
         <Router>
           {/* <IsLoadingAndError> */}
-            <Header withAuth0={withAuth0}/>
+            <Header/>
             <Switch>
               <Route exact path="/">
               {/* TODO: if the user is logged in, render the `BestBooks` component, if they are not, render the `Login` component */}
