@@ -10,9 +10,6 @@ import {withAuth0} from '@auth0/auth0-react';
 class Header extends React.Component {
   
 
-
-  
-  
   render() {
     return (
       <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
