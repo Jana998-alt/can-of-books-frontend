@@ -7,6 +7,7 @@ import Books from './Books';
 import { withAuth0 } from '@auth0/auth0-react';
 import BookFormModal from './BookFormModal';
 import Button from 'react-bootstrap/Button'
+import BookUpdateModal from './BookUpdateModal';
 
 class MyFavoriteBooks extends React.Component {
 
@@ -16,19 +17,21 @@ class MyFavoriteBooks extends React.Component {
       books: [],
       showCards: false,
       showModal: false,
+      showUpdateModal: false,
+      thisBook: {},
+      bookId: '',
     }
   }
 
   componentDidMount = async () => {
 
     const emailOfUser = this.props.auth0.user.email;
-    console.log(emailOfUser);
     const getBestBooks = await axios.get(`${process.env.REACT_APP_SERVER}/books?email=${emailOfUser}`);
 
 
-    this.setState({
+    await this.setState({
       books: getBestBooks.data,
-      showCards: true
+      showCards: true,
     })
 
   }
@@ -41,7 +44,8 @@ class MyFavoriteBooks extends React.Component {
   }
 
   handleModalClosing = () => {
-    this.setState({ showModal: false })
+    this.setState({ showModal: false,
+      showUpdateModal: false })
   }
 
   addBook = async (event) => {
@@ -76,7 +80,6 @@ class MyFavoriteBooks extends React.Component {
 
       const booksData = await axios.delete(`${SERVER}/books/${id}?email=${this.props.auth0.user.email}`);
 
-      console.log(booksData);
 
       this.setState({
         books: booksData.data
@@ -84,6 +87,40 @@ class MyFavoriteBooks extends React.Component {
     } catch (error) {
       console.error('error2');
     }
+
+  }
+
+  updateModel = async(bookId)=>{
+    await this.setState({
+      showUpdateModal: true,
+      thisBook: this.state.books.find(element => element._id === bookId ),
+      bookId: bookId,
+    })
+  }
+
+  updateBook = async (event) => {
+    
+    event.preventDefault();
+    try{
+    await this.setState({
+      thisBook: {
+        email: this.props.auth0.user.email,
+        bookName: event.target.bName.value,
+        bookDescription: event.target.bDescription.value,
+        bookStatus: event.target.bStatus.value,
+        bookImg: event.target.bImg.value,
+      }
+    })
+
+    const booksData = await axios.put(`${process.env.REACT_APP_SERVER}/books/${this.state.bookId}`, this.state.thisBook)
+
+    this.setState({
+      books: booksData.data
+    })
+  }
+  catch (error) {
+    console.log('error in update book function');
+  }
 
   }
 
@@ -102,9 +139,11 @@ class MyFavoriteBooks extends React.Component {
 
         <Button variant="outline-dark" onClick={this.handleModalShowing}>Add Book</Button>
 
+        <BookUpdateModal thisBook={this.state.thisBook} updateBook={this.updateBook} showUpdateModal={this.state.showUpdateModal} closing={this.handleModalClosing} />
+
         <BookFormModal addBook={this.addBook} showModal={this.state.showModal} closing={this.handleModalClosing} />
 
-        <Books books={this.state.books} showCards={this.state.showCards} deleteBook={this.deleteBook} />
+        <Books updateModel={this.updateModel} books={this.state.books} showCards={this.state.showCards} deleteBook={this.deleteBook} />
       </Jumbotron>
     )
   }
