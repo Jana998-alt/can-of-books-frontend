@@ -20,6 +20,7 @@ export class Books extends Component {
                             {element.status}
                         </Card.Text>
                     </Card.Body>
+                    <Button variant="outline-warning" onClick={() => this.props.updateModel(element._id)}>Update Book information</Button>
                     <Button variant="outline-danger" onClick={() => this.props.deleteBook(element._id)}>Delete Book</Button>
                 </Card>)
                 })}
